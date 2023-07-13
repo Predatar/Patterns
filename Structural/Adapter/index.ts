@@ -1,49 +1,52 @@
-interface Method {
-  getNumber(): void;
+{
+  class Engine2 {
+    simpleInterface() {
+      console.log('Engine 2.0 - tr-tr-tr');
+    }
+  }
+
+  class EngineV8 {
+    complecatedInterface() {
+      console.log('EngineV8! - wroom - wroom');
+    }
+  }
+
+  class EngineV8Adapter {
+    engine: EngineV8;
+    constructor(engine: EngineV8) {
+      this.engine = engine;
+    }
+
+    simpleInterface() {
+      this.engine.complecatedInterface();
+    }
+  }
+
+  class Auto {
+    startEngine(engine: Engine2) {
+      engine.simpleInterface();
+    }
+  }
+
+  // * Engine2
+  const myCar = new Auto();
+  const oldEngine = new Engine2();
+
+  myCar.startEngine(oldEngine);
+
+  // * EngineV8 with adapter
+
+  const engineV8WithAdapter = new EngineV8Adapter(new EngineV8());
+
+  myCar.startEngine(engineV8WithAdapter);
+
+  // * EngineV8 without adapter
+
+  const engineV8 = new EngineV8();
+
+  try {
+    myCar.startEngine(engineV8);
+  } catch (error) {
+    console.log(error);
+  }
 }
-
-class Pixel implements Method {
-  px: number;
-
-  constructor(px: number) {
-    this.px = px;
-  }
-
-  getNumber() {
-    console.log(`${this.px}px`);
-  }
-}
-
-class Rem implements Method {
-  rem: number;
-
-  constructor(rem: number) {
-    this.rem = rem;
-  }
-
-  getNumber() {
-    console.log(`${this.rem}rem`);
-  }
-}
-
-class AdapterPxToRem implements Method {
-  private adaptive: Pixel;
-
-  constructor(px: number) {
-    this.adaptive = new Pixel(px);
-  }
-
-  getNumber() {
-    console.log(`${this.adaptive.px / 16}rem`);
-  }
-}
-
-const Item = [new Pixel(20), new Rem(2)];
-
-Item.forEach(elem => {
-  elem.getNumber();
-});
-
-const Adapted = [new AdapterPxToRem(20), new Rem(2)];
-
-Adapted.forEach(elem => elem.getNumber());
