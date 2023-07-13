@@ -1,3 +1,5 @@
+
+
 class Car {
   constructor() {
     this.price = 10000;
@@ -47,7 +49,7 @@ class Parktronic {
 	}
 }
 
-const car = new Tesla();
+let car = new Tesla();
 
 car = new AutoPilot(car);
 car = new Parktronic(car);
