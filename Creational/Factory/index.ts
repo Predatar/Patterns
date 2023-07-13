@@ -1,8 +1,6 @@
 abstract class Transport {
   type: string;
-  constructor(type: 'car' | 'boat') {
-    this.type = type;
-  }
+
   do(): void {
     if (this.type == 'car') {
       console.log(`${this.type} go`);
@@ -11,36 +9,32 @@ abstract class Transport {
     }
   }
 }
-class Car extends Transport {}
-
-class Boat extends Transport {}
-
-abstract class TransportFactory {
-  abstract createTransport(): Transport;
-}
-
-class CarFactory extends TransportFactory {
-  createTransport(): Transport {
-    return new Car('car');
+class Car extends Transport {
+  constructor() {
+    super();
+    this.type = 'car';
   }
 }
 
-class BoatFactory extends TransportFactory {
-  createTransport(): Transport {
-    return new Boat('boat');
+class Boat extends Transport {
+  constructor() {
+    super();
+    this.type = 'boat';
   }
 }
 
-function createTransport(type: 'car' | 'boat') {
-  switch (type) {
-    case 'car':
-      return new CarFactory().createTransport();
-    case 'boat':
-      return new BoatFactory().createTransport();
-    default:
-      console.log('Error');
-      break;
+class TransportFactory {
+  static createTransport(type: 'car' | 'boat'): Transport | undefined {
+    switch (type) {
+      case 'car':
+        return new Car();
+      case 'boat':
+        return new Boat();
+      default:
+        console.log('Error');
+        break;
+    }
   }
 }
 
-console.log(createTransport('boat')?.do());
+console.log(TransportFactory.createTransport('car'));
