@@ -1,59 +1,46 @@
 {
-  class Car {
-    price: number;
-    model: string;
-    constructor() {
-      this.price = 10000;
-      this.model = 'Car';
-    }
+  interface ICar {
+    getPrice(): number;
+    getDescr(): string;
+  }
 
-    getPrice() {
+  class Tesla implements ICar {
+    price: number = 10000;
+    model: string = 'Car';
+
+    getPrice(): number {
       return this.price;
     }
-
-    getDescription() {
+    getDescr(): string {
       return this.model;
     }
   }
 
-  class Tesla extends Car {
-    constructor() {
-      super();
-      this.price = 25000;
-      this.model = 'Tesla';
+  class Decorator implements ICar {
+    private obj: ICar;
+
+    constructor(obj: ICar) {
+      this.obj = obj;
+    }
+
+    getPrice(): number {
+      return this.obj.getPrice() + 3000;
+    }
+
+    getDescr(): string {
+      return this.obj.getDescr() + ' with Decorator';
     }
   }
 
-  class AutoPilot {
-    car: Car;
-    constructor(car: Car) {
-      this.car = car;
-    }
-    getPrice() {
-      return this.car.getPrice() + 5000;
-    }
-    getDescription() {
-      return `${this.car.getDescription()} with autopilot`;
-    }
-  }
+  const car = new Tesla();
 
-  class Parktronic {
-    car: Car;
-    constructor(car: Car) {
-      this.car = car;
-    }
+  const decorator1 = new Decorator(car);
 
-    getPrice() {
-      return this.car.getPrice() + 3000;
-    }
+  console.log(decorator1.getDescr());
+  console.log(decorator1.getPrice());
 
-    getDescription() {
-      return `${this.car.getDescription()} with parktronic`;
-    }
-  }
+  const decorator2 = new Decorator(decorator1);
 
-  const tesla = new Tesla();
-	const teslaWithAutoPilot = new AutoPilot(tesla);
-
-  console.log(teslaWithAutoPilot.getPrice());
+  console.log(decorator2.getDescr());
+  console.log(decorator2.getPrice());
 }

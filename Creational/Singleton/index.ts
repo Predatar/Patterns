@@ -46,7 +46,7 @@ const db = [
     }
   }
 ];
-
+ 
 class Singleton {
   static instance: Singleton;
   id: number;

@@ -1,5 +1,8 @@
 {
-  abstract class Transport {
+  interface ITransport {
+    do(): void;
+  }
+  abstract class Transport implements ITransport {
     type: string;
 
     do(): void {
@@ -25,18 +28,17 @@
   }
 
   class TransportFactory {
-    static createTransport(type: 'car' | 'boat'): Transport | undefined {
+    createTransport(type: 'car' | 'boat'): ITransport {
       switch (type) {
         case 'car':
           return new Car();
         case 'boat':
           return new Boat();
-        default:
-          console.log('Error');
-          break;
       }
     }
   }
 
-  console.log(TransportFactory.createTransport('car'));
+  const tFactory = new TransportFactory();
+
+  console.log(tFactory.createTransport('car').do());
 }

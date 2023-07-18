@@ -30,23 +30,18 @@
 
   // * Engine2
   const myCar = new Auto();
-  const oldEngine = new Engine2();
 
-  myCar.startEngine(oldEngine);
+  myCar.startEngine(new Engine2());
 
   // * EngineV8 with adapter
 
-  const engineV8WithAdapter = new EngineV8Adapter(new EngineV8());
-
-  myCar.startEngine(engineV8WithAdapter);
+  myCar.startEngine(new EngineV8Adapter(new EngineV8()));
 
   // * EngineV8 without adapter
 
-  const engineV8 = new EngineV8();
-
-  try {
-    myCar.startEngine(engineV8);
+  /* try {
+    myCar.startEngine(new EngineV8());
   } catch (error) {
     console.log(error);
-  }
+  } */
 }

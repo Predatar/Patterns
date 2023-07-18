@@ -1,70 +1,34 @@
 {
-  class Beehive {
-    parts: string[] = [];
-  }
-
-  interface IBuilder {
-    createFamily(): this;
-    addFirstLayer(): this;
-    addSecondLayer(): this;
-    addThirdLayer(): this;
-
-    getResult(): Beehive;
-  }
-
-  class Builder implements IBuilder {
-    product: Beehive;
-
-    constructor() {
-      this.product = new Beehive();
-    }
-
-    createFamily(): this {
-      this.product.parts.push('createFamily');
-      return this;
-    }
-
-    addFirstLayer(): this {
-      this.product.parts.push('add first layer');
-      return this;
-    }
-
-    addSecondLayer(): this {
-      this.product.parts.push('add second layer');
-      return this;
-    }
-
-    addThirdLayer(): this {
-      this.product.parts.push('add third layer');
-      return this;
-    }
-
-    getResult(): Beehive {
-      return this.product;
+  class Engine {
+    engineStart() {
+      console.log('Engine start');
     }
   }
 
-  class Director {
-    private builder: IBuilder;
-    constructor(builder: IBuilder) {
-      this.builder = builder;
-    }
-    construct() {
-      return this.builder.createFamily().addFirstLayer().getResult();
-    }
-    addNextLayer() {
-      return this.builder.addSecondLayer().addThirdLayer().getResult();
+  class Gearbox {
+    gearUp() {
+      console.log('Gear up');
     }
   }
 
-	const builder = new Builder();
-	const director = new Director(builder);
+  class Light {
+    switchOn() {
+      console.log('Switch on the lights');
+    }
+  }
 
-	let beehive1 = director.construct();
+  class MachineControl {
+    private engine: Engine = new Engine();
+    private gearBox: Gearbox = new Gearbox();
+    private light: Light = new Light();
+    
+    go() {
+      this.engine.engineStart();
+      this.light.switchOn();
+      this.gearBox.gearUp();
+    }
+  }
 
-	console.log(beehive1.parts);
-
-	beehive1 = director.addNextLayer();
-
-	console.log(beehive1.parts);
+  const mc = new MachineControl();
+  mc.go()
 }
