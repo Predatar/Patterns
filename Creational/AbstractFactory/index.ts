@@ -86,6 +86,8 @@ class Web {
   }
 }
 
+// TODo исправить UML
+
 const chrome = new Web('dark');
 
 console.log(chrome.getFactory().createBtn());
